@@ -16,7 +16,8 @@ public class Calculation {
         this.participants = new HashMap<Person, Float>();
     }
 
-    public boolean addExpense(Person person, float expense) throws IllegalArgumentException, NullPointerException{
+    public boolean addExpense(Person person, float expense)
+            throws IllegalArgumentException, NullPointerException{
         if(expense <= 0){
             throw new IllegalArgumentException("Expense is negative or equals zero");
         }
@@ -38,7 +39,13 @@ public class Calculation {
     }
 
     public boolean addPerson(String name){
-        return false;
+        if(name != null){
+            Person newPerson = new Person(name);
+            this.participants.put(newPerson, 0f);
+            return true;
+        }else{
+            return false;
+        }
     }
 
     public Map<Person, Float> getParticipants(){
