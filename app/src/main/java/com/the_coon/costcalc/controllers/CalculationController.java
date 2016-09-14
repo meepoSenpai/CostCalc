@@ -12,12 +12,14 @@ import java.util.Set;
  */
 public class CalculationController {
 
-    private Set<Calculation> calculations = new HashSet<>();
-    private Calculation currentCalculation = null;
+    private Set<Calculation> calculations;
+    private Calculation currentCalculation;
     private static CalculationController instance = null;
 
     private CalculationController(){
-
+        calculations = new HashSet<>();
+        currentCalculation = new Calculation("TEST");
+        calculations.add(currentCalculation);
     }
 
     public static CalculationController getInstance(){
@@ -41,6 +43,11 @@ public class CalculationController {
 
     public boolean addCalculation(String name){
         return false;
+    }
+
+
+    public void setCurrentCalculation(Calculation calculation) {
+        this.currentCalculation = calculation;
     }
 
 }
