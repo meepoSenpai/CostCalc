@@ -1,24 +1,43 @@
 package com.the_coon.costcalc.models;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 /**
+ * Class that holds data about persons. Contains name and unique id.
  * Created by ian on 9/14/16.
  */
 public class Person {
 
-    private static int globalId = 0;
-    private int id;
+
+    // MEMBERS & INSTANCES
+    // ---------------------------------------------------------------------------------------------
+
+    private static AtomicInteger idCounter = new AtomicInteger();
+
+    private final int ID;
     private String name;
 
     public Person(String name){
+        this.ID = createID();
+        this.name = name;
 
     }
 
+
+    private int createID() {
+        return idCounter.incrementAndGet();
+    }
+
+
+
+    // GETTER & SETTER
+    // ---------------------------------------------------------------------------------------------
     public String getName(){
         return this.name;
     }
 
     public int getId(){
-        return this.id;
+        return ID;
     }
 
 }
