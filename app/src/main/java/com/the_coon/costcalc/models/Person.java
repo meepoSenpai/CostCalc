@@ -18,16 +18,11 @@ public class Person {
     private String name;
 
     public Person(String name){
-        this.ID = createID();
+        this.ID = idCounter.getAndIncrement();
         this.name = name;
 
     }
-
-
-    private int createID() {
-        return idCounter.incrementAndGet();
-    }
-
+    // ---------------------------------------------------------------------------------------------
 
 
     // GETTER & SETTER
@@ -39,5 +34,6 @@ public class Person {
     public int getId(){
         return ID;
     }
+    //----------------------------------------------------------------------------------------------
 
 }

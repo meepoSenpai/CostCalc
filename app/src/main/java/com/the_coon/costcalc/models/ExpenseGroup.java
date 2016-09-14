@@ -2,46 +2,56 @@ package com.the_coon.costcalc.models;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** Class that manages a single debt calculation.
  * Holds information about participants of a debt calculation.
  * Created by ian on 9/14/16.
  */
-public class Calculation {
+public class ExpenseGroup {
 
+
+    private static AtomicInteger idCounter = new AtomicInteger();
+
+    private final int ID;
 
     private Map<Person, Float> participants;
     private String name;
 
-    public Calculation (String name){
+    public ExpenseGroup(String name){
         this.name = name;
         this.participants = new HashMap<>();
+        this.ID = idCounter.getAndIncrement();
     }
 
 
     // METHODS & FUNCTIONS
     // ---------------------------------------------------------------------------------------------
 
-    public boolean addExpense(Person person, float expense)
+    public void addExpense(int personId, float expense)
             throws IllegalArgumentException, NullPointerException{
         if(expense <= 0){
             throw new IllegalArgumentException("Expense is negative or equals zero");
         }
-        if(person == null){
-            throw new NullPointerException("The referenced Person is null");
+        if(personId < 0){
+            throw new IllegalArgumentException("PersonID can't be lower than 0");
         }
-        if(participants.containsKey(person)){
-            float currentExpense;
-            if(participants.get(person) == null){
-                currentExpense = expense;
-            }else{
-                currentExpense = participants.get(person) + expense;
+        Person person = null;
+        for(Person personToFind : participants.keySet()){
+            if(personToFind.getId() == personId){
+                person = personToFind;
             }
-            participants.put(person, currentExpense);
-            return true;
-        }else{
-            return false;
         }
+        if(person == null){
+            throw new NullPointerException("Person with this ID does not exist");
+        }
+        float currentExpense;
+        if(participants.get(person) == null){
+            currentExpense = expense;
+        }else{
+            currentExpense = participants.get(person) + expense;
+        }
+        participants.put(person, currentExpense);
     }
 
     public boolean addPerson(String name){
@@ -53,7 +63,7 @@ public class Calculation {
             return false;
         }
     }
-
+    // ---------------------------------------------------------------------------------------------
 
     // GETTER & SETTER
     // ---------------------------------------------------------------------------------------------
@@ -64,5 +74,10 @@ public class Calculation {
     public String getName(){
         return name;
     }
+
+    public int getId(){
+        return this.ID;
+    }
+    // ---------------------------------------------------------------------------------------------
 
 }

@@ -1,6 +1,6 @@
 package com.the_coon.costcalc.controllers;
 
-import com.the_coon.costcalc.models.Calculation;
+import com.the_coon.costcalc.models.ExpenseGroup;
 import com.the_coon.costcalc.models.Person;
 
 import java.util.HashSet;
@@ -12,14 +12,13 @@ import java.util.Set;
  */
 public class CalculationController {
 
-    private Set<Calculation> calculations;
-    private Calculation currentCalculation;
+    private Set<ExpenseGroup> expenseGroups;
+    private ExpenseGroup currentExpenseGroup;
     private static CalculationController instance = null;
 
     private CalculationController(){
-        calculations = new HashSet<>();
-        currentCalculation = new Calculation("TEST");
-        calculations.add(currentCalculation);
+        expenseGroups = new HashSet<>();
+        currentExpenseGroup = null;
     }
 
     public static CalculationController getInstance(){
@@ -29,25 +28,62 @@ public class CalculationController {
         return instance;
     }
 
-    public void addExpenseToCalculation(Person person, Calculation calc, float price){
+    public void addExpenseToCalculation(int personId, int calcId, float price)
+            throws NullPointerException, IllegalArgumentException{
+        if(price <= 0){
+            throw new IllegalArgumentException("The expense has to be larger than 0");
+        }
+        if(calcId < 0 || personId < 0){
+            throw new IllegalArgumentException("IDs have to be greater or equals to zero");
+        }
+        ExpenseGroup toModify = null;
+        for(ExpenseGroup calc : this.expenseGroups){
+            if(calc.getId() == calcId){
+                toModify = calc;
+                break;
+            }
+        }
+        if(toModify == null){
+            throw new NullPointerException("The specified ExpenseGroup does not exist.");
+        }
+
+        toModify.addExpense(personId, price);
 
     }
 
-    public boolean addPersonToCalculation(Calculation calc, String name){
-        return false;
+    public boolean addPersonToCalculation(int expID, String name){
+        if(expID < 0){
+            throw new IllegalArgumentException("IDs have to be greater or equals to zero");
+        }
+        ExpenseGroup toModify = null;
+        for(ExpenseGroup expGroup : expenseGroups){
+            if(expGroup.getId() == expID){
+                toModify = expGroup;
+                break;
+            }
+        }
+        if(toModify == null){
+            return false;
+        }
+        return toModify.addPerson(name);
     }
 
-    public Map<Person, Map<Person, Float>> calculateExpense(Calculation calc){
+    public Map<Person, Map<Person, Float>> calculateExpense(ExpenseGroup calc){
         return null;
     }
 
     public boolean addCalculation(String name){
-        return false;
+        try{
+            ExpenseGroup expGroup = new ExpenseGroup(name);
+            return this.expenseGroups.add(expGroup);
+        }catch(Exception e){
+            return false;
+        }
     }
 
 
-    public void setCurrentCalculation(Calculation calculation) {
-        this.currentCalculation = calculation;
+    public void setCurrentExpenseGroup(ExpenseGroup expenseGroup) {
+        this.currentExpenseGroup = expenseGroup;
     }
 
 }
