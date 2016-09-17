@@ -8,11 +8,8 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-<<<<<<< e14d2a1e74f3430a9b2f8d17876352e96b782fc3
-=======
 import java.util.LinkedList;
 import java.util.List;
->>>>>>> Completet Calculationcontroller and added tests for it
 import java.util.Map;
 
 import static org.junit.Assert.*;
@@ -107,7 +104,7 @@ public class CalculationControllerTest {
                 totalGross += result.get(p).get(p2);
             }
         }
-        assertTrue(totalGross < 0.005);
+        assertTrue(totalGross < 0.00005);
     }
 
 }
