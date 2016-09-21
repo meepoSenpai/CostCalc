@@ -35,7 +35,6 @@ public class MainActivity extends AppCompatActivity {
         calculationController.createExpenseGroup("Ausgaben 21.09.2016");
         calculationController.createExpenseGroup("Ausgaben 22.09.2016");
 
-
         ArrayList<ExpenseGroup> expenseGroupData = new ArrayList<>();
 
         for(ExpenseGroup g : calculationController.getExpenseGroups()) {
@@ -46,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Collections.sort(expenseGroupData, new Comparator<ExpenseGroup>() {
             @Override
             public int compare(ExpenseGroup lhs, ExpenseGroup rhs) {
-                
+
             }
         });
 

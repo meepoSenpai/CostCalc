@@ -27,11 +27,6 @@ public class CalculationControllerTest {
         calcCont.createExpenseGroup("one");
     }
 
-    @After
-    public void tearDown(){
-        calcCont = null;
-    }
-
     @Test
     public void addCalculationTest(){
         assertTrue(calcCont.createExpenseGroup("Calculation Two"));

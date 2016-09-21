@@ -1,5 +1,6 @@
 package com.the_coon.costcalc.models;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -8,12 +9,13 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Holds information about participants of a debt calculation.
  * Created by ian on 9/14/16.
  */
-public class ExpenseGroup {
+public class ExpenseGroup{
 
 
     private static AtomicInteger idCounter = new AtomicInteger();
 
     private final int ID;
+    private final Date dateOfCreation;
 
     private Map<Person, Float> participants;
     private String name;
@@ -22,6 +24,7 @@ public class ExpenseGroup {
         this.name = name;
         this.participants = new HashMap<>();
         this.ID = idCounter.getAndIncrement();
+        this.dateOfCreation = new Date();
     }
 
 
@@ -84,6 +87,9 @@ public class ExpenseGroup {
         return name;
     }
 
+    public Date getDateOfCreation(){
+        return this.dateOfCreation;
+    }
     // ---------------------------------------------------------------------------------------------
 
 }
