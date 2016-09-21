@@ -78,6 +78,12 @@ public class ExpenseGroup {
     public int getId(){
         return this.ID;
     }
+
+    @Override
+    public String toString() {
+        return name;
+    }
+
     // ---------------------------------------------------------------------------------------------
 
 }

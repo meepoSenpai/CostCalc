@@ -113,7 +113,7 @@ public class CalculationController {
         return result;
     }
 
-    public boolean addCalculation(String name){
+    public boolean createExpenseGroup(String name){
         try{
             ExpenseGroup expGroup = new ExpenseGroup(name);
             return this.expenseGroups.add(expGroup);

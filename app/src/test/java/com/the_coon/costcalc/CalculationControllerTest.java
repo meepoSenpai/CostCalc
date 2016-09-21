@@ -24,7 +24,7 @@ public class CalculationControllerTest {
     @Before
     public void setUp(){
         calcCont = CalculationController.getTestInstance();
-        calcCont.addCalculation("one");
+        calcCont.createExpenseGroup("one");
     }
 
     @After
@@ -34,10 +34,10 @@ public class CalculationControllerTest {
 
     @Test
     public void addCalculationTest(){
-        assertTrue(calcCont.addCalculation("Calculation Two"));
-        assertTrue(calcCont.addCalculation("Calculation Three"));
-        assertTrue(calcCont.addCalculation("Calculation Four"));
-        assertTrue(calcCont.addCalculation("Calculation Five"));
+        assertTrue(calcCont.createExpenseGroup("Calculation Two"));
+        assertTrue(calcCont.createExpenseGroup("Calculation Three"));
+        assertTrue(calcCont.createExpenseGroup("Calculation Four"));
+        assertTrue(calcCont.createExpenseGroup("Calculation Five"));
         assertEquals(calcCont.getExpenseGroups().size(), 5);
     }
 
