@@ -27,11 +27,6 @@ public class CalculationControllerTest {
         calcCont.addCalculation("one");
     }
 
-    @After
-    public void tearDown(){
-        calcCont = null;
-    }
-
     @Test
     public void addCalculationTest(){
         assertTrue(calcCont.addCalculation("Calculation Two"));
