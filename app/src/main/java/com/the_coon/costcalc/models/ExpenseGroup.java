@@ -20,11 +20,14 @@ public class ExpenseGroup{
     private Map<Person, Float> participants;
     private String name;
 
+    private long timestamp;
+
     public ExpenseGroup(String name){
         this.name = name;
         this.participants = new HashMap<>();
         this.ID = idCounter.getAndIncrement();
         this.dateOfCreation = new Date();
+        this.timestamp = System.currentTimeMillis();
     }
 
 
@@ -89,6 +92,10 @@ public class ExpenseGroup{
 
     public Date getDateOfCreation(){
         return this.dateOfCreation;
+    }
+
+    public long getTimestamp() {
+        return timestamp;
     }
     // ---------------------------------------------------------------------------------------------
 

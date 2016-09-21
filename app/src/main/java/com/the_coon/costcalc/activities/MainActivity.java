@@ -5,6 +5,7 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
@@ -17,8 +18,6 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
-import java.util.HashSet;
-import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,28 +29,32 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        CalculationController calculationController = CalculationController.getInstance();
+        final CalculationController calculationController = CalculationController.getInstance();
 
-        calculationController.createExpenseGroup("Ausgaben 21.09.2016");
-        calculationController.createExpenseGroup("Ausgaben 22.09.2016");
+        calculationController.getExpenseGroups().clear();
 
+        for(int i = 1; i < 11; i++) {
+            calculationController.createExpenseGroup("Ausgaben " + i +":  "  + new Date().toString());
+            android.os.SystemClock.sleep(100);
+        }
         ArrayList<ExpenseGroup> expenseGroupData = new ArrayList<>();
 
-        for(ExpenseGroup g : calculationController.getExpenseGroups()) {
+        for (ExpenseGroup g : calculationController.getExpenseGroups()) {
+            Log.d("TIMESTAMP", Long.toString(g.getTimestamp()));
             expenseGroupData.add(g);
         }
-        ArrayAdapter<ExpenseGroup> nameAdapter =new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, expenseGroupData);
 
         Collections.sort(expenseGroupData, new Comparator<ExpenseGroup>() {
             @Override
             public int compare(ExpenseGroup lhs, ExpenseGroup rhs) {
-
+                return Long.compare(lhs.getTimestamp(),rhs.getTimestamp());
             }
         });
+        ArrayAdapter<ExpenseGroup> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, expenseGroupData);
 
         ListView view = (ListView) findViewById(R.id.listView);
         view.setAdapter(nameAdapter);
-
+        
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
