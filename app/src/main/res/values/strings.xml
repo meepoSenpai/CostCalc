@@ -4,4 +4,5 @@
     <string name="st_add_new_expense_group">Add new expense group</string>
     <string name ="cancel">Cancel</string>
     <string name ="ok">Okay</string>
+    <string name="st_expense_group_name_tag">Expense Group Name:</string>
 </resources>
