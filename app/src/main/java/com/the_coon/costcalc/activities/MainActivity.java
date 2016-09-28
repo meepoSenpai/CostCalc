@@ -1,11 +1,11 @@
 package com.the_coon.costcalc.activities;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -13,20 +13,19 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.the_coon.costcalc.R;
 import com.the_coon.costcalc.controllers.CalculationController;
 import com.the_coon.costcalc.dialogs.NewExpenseGroupDialog;
 import com.the_coon.costcalc.models.ExpenseGroup;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
 
     // Inflating main menu
     @Override
@@ -51,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
+    private final CalculationController calculationController = CalculationController.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,34 +58,49 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-
-        final CalculationController calculationController = CalculationController.getInstance();
-        calculationController.getExpenseGroups().clear();
-
+        
         for(int i = 1; i < 11; i++) {
             calculationController.createExpenseGroup("Ausgaben " + i +":  "  + new Date().toString());
             android.os.SystemClock.sleep(100);
         }
-        ArrayList<ExpenseGroup> expenseGroupData = new ArrayList<>();
 
-        for (ExpenseGroup g : calculationController.getExpenseGroups()) {
-            Log.d("TIMESTAMP", Long.toString(g.getTimestamp()));
-            expenseGroupData.add(g);
-        }
+        createExpenseListView(loadExpenseGroupList());
+        createExpenseGroupAddButton();
+    }
 
-        Collections.sort(expenseGroupData, new Comparator<ExpenseGroup>() {
+    private List<ExpenseGroup> loadExpenseGroupList() {
+        List<ExpenseGroup> eGroups = new LinkedList<>();
+        eGroups.addAll(calculationController.getExpenseGroups());
+
+        Collections.sort(eGroups, new Comparator<ExpenseGroup>() {
             @Override
             public int compare(ExpenseGroup lhs, ExpenseGroup rhs) {
                 return Long.compare(lhs.getTimestamp(),rhs.getTimestamp());
             }
         });
-        ArrayAdapter<ExpenseGroup> nameAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, expenseGroupData);
+        return eGroups;
+    }
 
-        ListView view = (ListView) findViewById(R.id.listView);
-        view.setAdapter(nameAdapter);
+    private void createExpenseListView(List<ExpenseGroup> eg){
+        final ArrayAdapter<ExpenseGroup> nameAdapter =
+                new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, eg);
+        ListView lv = (ListView) findViewById(R.id.listView);
+        lv.setAdapter(nameAdapter);
+        lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent toExpenseGroupActivity = new Intent(MainActivity.this,
+                        ExpenseGroupActivity.class);
+                Bundle b = new Bundle();
+                b.putInt("expenseGroupID", nameAdapter.getItem(position).getId());
+                toExpenseGroupActivity.putExtras(b);
+                startActivity(toExpenseGroupActivity);
+                finish();
+            }
+        });
+    }
 
-
+    private void createExpenseGroupAddButton(){
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
