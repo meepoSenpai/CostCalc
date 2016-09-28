@@ -6,6 +6,7 @@ import android.app.DialogFragment;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.View;
 
 import com.the_coon.costcalc.R;
 
@@ -26,6 +27,7 @@ public class NewExpenseGroupDialog extends DialogFragment {
 
 
         builder.setTitle(R.string.st_add_new_expense_group);
+
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
