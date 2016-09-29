@@ -28,6 +28,7 @@ public class NewExpenseGroupDialog extends DialogFragment {
 
         builder.setTitle(R.string.st_add_new_expense_group);
 
+
         builder.setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

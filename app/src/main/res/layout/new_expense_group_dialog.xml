@@ -2,25 +2,34 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="?dialogPreferredPadding"
-    android:paddingRight="?dialogPreferredPadding"
-    android:paddingBottom="?dialogPreferredPadding"
-    android:paddingTop="?dialogPreferredPadding"
-    >
+    android:orientation="vertical">
     <!--android:padding="?dialogPreferredPadding"> -->
 
 
-    <TextView
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:text="@string/st_expense_group_name_tag" />
+        android:layout_height="2dp"
+        android:background="?android:attr/listDivider"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"/>
 
-    <EditText
-        android:id="@+id/edit"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
-        android:layout_marginLeft="-3dp"/>
+        android:orientation="vertical"
+        android:padding="?dialogPreferredPadding">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="bottom"
+            android:text="@string/st_expense_group_name_tag"
+            />
+
+        <EditText
+            android:id="@+id/edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="-3dp" />
+    </LinearLayout>
 </LinearLayout>
