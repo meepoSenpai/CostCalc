@@ -93,7 +93,7 @@ public class MainActivity extends AppCompatActivity {
                 Intent toExpenseGroupActivity = new Intent(MainActivity.this,
                         ExpenseGroupActivity.class);
                 Bundle b = new Bundle();
-                b.putInt("expenseGroupID", nameAdapter.getItem(position).getId());
+                b.putInt("key", nameAdapter.getItem(position).getId());
                 toExpenseGroupActivity.putExtras(b);
                 startActivity(toExpenseGroupActivity);
                 finish();

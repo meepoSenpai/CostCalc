@@ -34,6 +34,10 @@ public class Person {
     public int getId(){
         return ID;
     }
+
+    public String toString(){
+        return name;
+    }
     //----------------------------------------------------------------------------------------------
 
 }

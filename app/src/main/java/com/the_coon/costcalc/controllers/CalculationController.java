@@ -17,12 +17,10 @@ import java.util.Set;
 public class CalculationController {
 
     private Set<ExpenseGroup> expenseGroups;
-    private ExpenseGroup currentExpenseGroup;
     private static CalculationController instance = null;
 
     private CalculationController(){
         expenseGroups = new HashSet<>();
-        currentExpenseGroup = null;
     }
 
     public static CalculationController getInstance(){
@@ -125,9 +123,13 @@ public class CalculationController {
         }
     }
 
-
-    public void setCurrentExpenseGroup(ExpenseGroup expenseGroup) {
-        this.currentExpenseGroup = expenseGroup;
+    public ExpenseGroup getExpenseGroupById(int id){
+        for(ExpenseGroup elem : expenseGroups){
+            if(elem.getId() == id){
+                return elem;
+            }
+        }
+        return null;
     }
 
     public Set<ExpenseGroup> getExpenseGroups(){

@@ -18,6 +18,11 @@
             </intent-filter>
 
         </activity>
+        <activity
+            android:name=".activities.ExpenseGroupActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+
+        </activity>
     </application>
 
 </manifest>
