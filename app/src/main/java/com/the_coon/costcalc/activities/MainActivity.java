@@ -67,7 +67,6 @@ public class MainActivity extends AppCompatActivity {
         createExpenseListView(loadExpenseGroupList());
         createExpenseGroupAddButton();
         Bundle b = new Bundle();
-        b.put
     }
 
     private List<ExpenseGroup> loadExpenseGroupList() {
