@@ -69,7 +69,7 @@ public class ExpenseGroup{
      * @param ID id of the person.
      */
     public boolean addPerson(int ID){
-        if(ID <= 0) {
+        if(ID < 0) {
             throw new IllegalArgumentException("ERROR: INVALID PERSON ID. WAS " + Integer.toString(ID));
         }
         participants.put(ID, 0f);
@@ -82,7 +82,7 @@ public class ExpenseGroup{
      * @param debt debt of the person
      */
     public boolean addPerson(int ID, float debt) {
-        if(ID <= 0)
+        if(ID < 0)
             throw new IllegalArgumentException("ERROR: INVALID PERSON ID. WAS " + Integer.toString(ID));
         participants.put(ID,debt);
         return true;
