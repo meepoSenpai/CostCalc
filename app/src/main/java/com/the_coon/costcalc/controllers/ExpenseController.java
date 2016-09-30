@@ -83,6 +83,8 @@ public class ExpenseController {
         /**
          * TESTING: If person is already in the database, use it.
          * Otherwise create a new person, here with dummy data.
+         * This will be important, if the user wants to select an existing person or create a new one
+         * when modifying an expense group.
          */
         if (persons.containsKey(personID))
             p = persons.get(personID);
@@ -134,25 +136,11 @@ public class ExpenseController {
     }
 
     public void createExpenseGroup(String name) {
-
         ExpenseGroup group = new ExpenseGroup(name);
         expenseGroups.put(group.getId(), group);
-
-        /*try{
-            ExpenseGroup expGroup = new ExpenseGroup(name);
-            return expenseGroups.add(expGroup);
-        }catch(Exception e){
-            return false;
-        }*/
     }
 
     public ExpenseGroup getExpenseGroupById(int id) {
-        /*for(ExpenseGroup elem : expenseGroups){
-            if(elem.getId() == id){
-                return elem;
-            }
-        }*/
-
         ExpenseGroup group = expenseGroups.get(id);
         if (group == null)
             throw new NullPointerException("ERROR: THE EXPENSE GROUP WITH THE FOLLOWING ID WAS NOT " +
