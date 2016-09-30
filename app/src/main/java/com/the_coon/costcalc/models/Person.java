@@ -20,7 +20,6 @@ public class Person {
     public Person(String name){
         this.ID = idCounter.getAndIncrement();
         this.name = name;
-
     }
     // ---------------------------------------------------------------------------------------------
 

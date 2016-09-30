@@ -15,7 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.the_coon.costcalc.R;
-import com.the_coon.costcalc.controllers.CalculationController;
+import com.the_coon.costcalc.controllers.ExpenseController;
 import com.the_coon.costcalc.dialogs.NewExpenseGroupDialog;
 import com.the_coon.costcalc.models.ExpenseGroup;
 
@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(menuItem);
     }
 
-    private final CalculationController calculationController = CalculationController.getInstance();
+    private final ExpenseController expenseController = ExpenseController.getInstance();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,18 +60,18 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         
         for(int i = 1; i < 11; i++) {
-            calculationController.createExpenseGroup("Ausgaben " + i +":  "  + new Date().toString());
+            expenseController.createExpenseGroup("Ausgaben " + i +":  "  + new Date().toString());
             android.os.SystemClock.sleep(100);
         }
 
         createExpenseListView(loadExpenseGroupList());
-        createExpenseGroupAddButton();
+        createAddExpenseGroupButton();
         Bundle b = new Bundle();
     }
 
     private List<ExpenseGroup> loadExpenseGroupList() {
         List<ExpenseGroup> eGroups = new LinkedList<>();
-        eGroups.addAll(calculationController.getExpenseGroups());
+        eGroups.addAll(expenseController.getExpenseGroups().values());
 
         Collections.sort(eGroups, new Comparator<ExpenseGroup>() {
             @Override
@@ -101,7 +101,7 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    private void createExpenseGroupAddButton(){
+    private void createAddExpenseGroupButton(){
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override

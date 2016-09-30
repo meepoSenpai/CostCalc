@@ -7,10 +7,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.the_coon.costcalc.R;
-import com.the_coon.costcalc.controllers.CalculationController;
+import com.the_coon.costcalc.controllers.ExpenseController;
 import com.the_coon.costcalc.models.ExpenseGroup;
 import com.the_coon.costcalc.models.Person;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
  */
 public class ExpenseGroupActivity extends AppCompatActivity {
 
-    private final CalculationController calculationController = CalculationController.getInstance();
+    private final ExpenseController expenseController = ExpenseController.getInstance();
     private ExpenseGroup currentExpenseGroup;
 
     @Override
@@ -37,10 +38,11 @@ public class ExpenseGroupActivity extends AppCompatActivity {
     private void setCurrentExpenseGroup(){
         Bundle b = getIntent().getExtras();
         if(b.get("key")!= null){
-            currentExpenseGroup = calculationController.getExpenseGroupById(b.getInt("key"));
+            currentExpenseGroup = expenseController.getExpenseGroupById(b.getInt("key"));
         }
         try{
-            calculationController.addPersonToCalculation(currentExpenseGroup.getId(), "Walter");
+            Person p = expenseController.createNewPerson("Herbert Hohlbein");
+            expenseController.addPersonToExpenseGroup(currentExpenseGroup.getId(), p.getId());
         }catch(NullPointerException e){
 
         }
@@ -48,8 +50,11 @@ public class ExpenseGroupActivity extends AppCompatActivity {
 
     private void createParticipantListView(){
         if(currentExpenseGroup != null) {
-            List<Person> participants = new LinkedList<>();
-            participants.addAll(currentExpenseGroup.getParticipants().keySet());
+            ArrayList<Person> participants = new ArrayList<>();
+            for(Integer personID : currentExpenseGroup.getParticipants().keySet()) {
+                participants.add(expenseController.getPersonByID(personID));
+            }
+
             final ArrayAdapter<Person> nameAdapter =
                     new ArrayAdapter<>(this, android.R.layout.simple_expandable_list_item_1, participants);
             ListView lv = (ListView) findViewById(R.id.listView);

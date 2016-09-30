@@ -17,7 +17,8 @@ public class ExpenseGroup{
     private final int ID;
     private final Date dateOfCreation;
 
-    private Map<Person, Float> participants;
+   // private Map<Person, Float> participants;
+    private Map<Integer, Float>participants;
     private String name;
 
     private long timestamp;
@@ -34,21 +35,22 @@ public class ExpenseGroup{
     // METHODS & FUNCTIONS
     // ---------------------------------------------------------------------------------------------
 
-    public void addExpense(int personId, float expense)
+    public void setExpenseForPerson(int ID, float expense)
             throws IllegalArgumentException, NullPointerException{
         if(expense <= 0){
-            throw new IllegalArgumentException("Expense is negative or equals zero");
+            throw new IllegalArgumentException("ERROR: EXPENSE IS NEGATIVE OR ZERO");
         }
-        if(personId < 0){
-            throw new IllegalArgumentException("PersonID can't be lower than 0");
+        if(ID < 0){
+            throw new IllegalArgumentException("ERROR: INVALID PERSON ID");
         }
-        Person person = null;
-        for(Person personToFind : participants.keySet()){
-            if(personToFind.getId() == personId){
+        /*Person person = null;
+        for(Person personToFind : participants.values()){
+            if(personToFind.getId() == ID){
                 person = personToFind;
             }
-        }
-        if(person == null){
+        }*/
+
+        /*if(person == null){
             throw new NullPointerException("Person with this ID does not exist");
         }
         float currentExpense;
@@ -56,24 +58,48 @@ public class ExpenseGroup{
             currentExpense = expense;
         }else{
             currentExpense = participants.get(person) + expense;
-        }
-        participants.put(person, currentExpense);
+        }*/
+
+
+        participants.put(ID, expense);
     }
 
-    public boolean addPerson(String name){
-        if(name != null){
-            Person newPerson = new Person(name);
-            this.participants.put(newPerson, 0f);
-            return true;
-        }else{
-            return false;
+    /**
+     * Adds a person to the list of participants.
+     * @param ID id of the person.
+     */
+    public boolean addPerson(int ID){
+        if(ID <= 0) {
+            throw new IllegalArgumentException("ERROR: INVALID PERSON ID. WAS " + Integer.toString(ID));
         }
+        participants.put(ID, 0f);
+        return true;
+    }
+
+    /**
+     * Adds a person to the list of participants with predetermined debts.
+     * @param ID id of the person
+     * @param debt debt of the person
+     */
+    public boolean addPerson(int ID, float debt) {
+        if(ID <= 0)
+            throw new IllegalArgumentException("ERROR: INVALID PERSON ID. WAS " + Integer.toString(ID));
+        participants.put(ID,debt);
+        return true;
+    }
+
+    /**
+     * TODO: implement this.
+     * @param ID
+     */
+    public void removePersonFromExpenseGroup(int ID){
+
     }
     // ---------------------------------------------------------------------------------------------
 
     // GETTER & SETTER
     // ---------------------------------------------------------------------------------------------
-    public Map<Person, Float> getParticipants(){
+    public Map<Integer, Float> getParticipants(){
         return participants;
     }
 
